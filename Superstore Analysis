@@ -1,4 +1,4 @@
--- This project utilizes the following fictional Superstore data:
+# This project utilizes the following fictional Superstore data:
 
 
 CREATE TABLE superstore (
@@ -29,7 +29,7 @@ VALUES
     (15, 'Cozy Throw Blanket', 'Furnishings', 24.99, 100, 4.2);
 
 
--- For this project, I used SQL to query the Superstore database to get information about items sold at the store and their prices. 
+# For this project, I used SQL to query the Superstore database to get information about items sold at the store and their prices. 
 
 
 -- Table sample:
