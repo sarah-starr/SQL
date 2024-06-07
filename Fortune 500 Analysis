@@ -1,3 +1,4 @@
+# This project utilizes the following fictional Fortune 500 data:
 
 
 CREATE TABLE fortune_companies (
