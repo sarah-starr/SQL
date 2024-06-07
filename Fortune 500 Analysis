@@ -1,0 +1,27 @@
+-- Table Sample:
+SELECT *
+FROM fortune_companies
+LIMIT 5;
+
+-- Categorize companies by size of the enterprise (number of employees):
+SELECT company_name, employees,
+CASE WHEN employees >= 1000000 THEN 'Massive Enterprise'
+WHEN employees >= 100000 THEN 'Large Enterprise'
+WHEN employees >= 10000 THEN 'Mid-Market Enterprise'
+ELSE 'Small Enterprise'
+END AS enterprise_size
+FROM fortune_companies
+GROUP BY company_name, employees
+ORDER BY employees desc;
+
+-- Count of companies in each enterprise size:
+SELECT COUNT(*),
+CASE WHEN employees >= 1000000 THEN 'Massive Enterprise'
+WHEN employees >= 100000 THEN 'Large Enterprise'
+WHEN employees >= 10000 THEN 'Mid-Market Enterprise'
+ELSE 'Small Enterprise'
+END AS enterprise_size
+FROM fortune_companies
+GROUP BY enterprise_size
+ORDER BY employees desc;
+
