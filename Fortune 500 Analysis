@@ -30,7 +30,7 @@ SELECT industry, SUM(revenue) AS total_industry_revenue
 FROM fortune_companies
 GROUP BY industry;
 
--- 5. Identify the most profitable industries while comparing to total number of employees:
+-- 5. Identify the most profitable industries, compared to total number of employees:
 SELECT industry,
 ROUND(SUM(revenue), 1) AS total_industry_revenue,
 SUM(employees) AS total_industry_employees
@@ -39,7 +39,18 @@ GROUP BY industry
 HAVING total_industry_revenue >= 1500
 ORDER BY total_industry_revenue desc;
 
--- 6. Identify companies with the best benefits (has healthcare, >20 PTO days, and 10 or more weeks of maternity leave), correlated with tenure:
+-- 6. Identify the most profitable industries, compared with average of benefits:
+SELECT industry,
+ROUND(SUM(revenue), 1) AS total_industry_revenue,
+ROUND((AVG(healthcare_benefits))*100, 1) AS percent_companies_with_healthcare,
+ROUND(AVG(paid_time_off_days), 1) AS average_PTO_days,
+ROUND(AVG(maternity_leave_weeks), 1) AS average_maternity_leave
+FROM fortune_companies
+GROUP BY industry
+HAVING total_industry_revenue >= 1500
+ORDER BY total_industry_revenue desc;
+
+-- 7. Identify companies with the best benefits (has healthcare, >20 PTO days, and 10 or more weeks of maternity leave), correlated with tenure:
 SELECT company_name, avg_employee_tenure
 FROM fortune_companies
 WHERE healthcare_benefits = 1
@@ -48,7 +59,25 @@ AND maternity_leave_weeks >= 10
 ORDER BY avg_employee_tenure desc
 LIMIT 10;
 
--- 7. Identify companies with the best average employee tenure, correlated with benefits:
+-- 8. Identify companies with the best benefits (has healthcare, >20 PTO days, and 10 or more weeks of maternity leave), correlated with revenue:
+SELECT company_name, revenue
+FROM fortune_companies
+WHERE healthcare_benefits = 1
+AND paid_time_off_days > 20
+AND maternity_leave_weeks >= 10
+ORDER BY revenue desc
+LIMIT 10;
+
+-- 9. Identify companies with the worst benefits (no healthcare, <10 PTO days, and <10 weeks of maternity leave), correlated with revenue:
+SELECT company_name, revenue
+FROM fortune_companies
+WHERE healthcare_benefits = 0
+AND paid_time_off_days < 15
+AND maternity_leave_weeks < 10
+ORDER BY revenue desc
+LIMIT 10;
+
+-- 10. Identify companies with the best average employee tenure, correlated with benefits:
 SELECT company_name, avg_employee_tenure, healthcare_benefits, paid_time_off_days, maternity_leave_weeks
 FROM fortune_companies
 GROUP BY company_name
