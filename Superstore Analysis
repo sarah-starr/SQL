@@ -72,3 +72,9 @@ ORDER BY average_rating desc;
 SELECT item_name, stock_quantity
 FROM superstore
 WHERE item_name = 'Air Purifier';
+
+-- Items in need of re-stock (under 50) listed by priority:
+SELECT item_name, stock_quantity
+FROM superstore
+WHERE stock_quantity < 50
+ORDER BY stock_quantity asc;
