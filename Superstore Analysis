@@ -47,6 +47,11 @@ ORDER BY price;
 SELECT AVG(price)
 FROM superstore;
 
+-- Number of items that cost more than $49.99
+SELECT COUNT(item_name)
+FROM superstore
+WHERE price > 49.99;
+
 -- Most expensive item in Kitchen Supplies - Method 1:
 SELECT item_name, price
 FROM superstore
