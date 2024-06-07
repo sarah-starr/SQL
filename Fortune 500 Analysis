@@ -1,4 +1,4 @@
--- Table Sample:
+-- Table sample:
 SELECT *
 FROM fortune_companies
 LIMIT 5;
