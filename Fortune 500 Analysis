@@ -14,7 +14,7 @@ FROM fortune_companies
 GROUP BY company_name, employees
 ORDER BY employees desc;
 
--- Count of companies in each enterprise size:
+-- Count of companies in each enterprise size category:
 SELECT COUNT(*),
 CASE WHEN employees >= 1000000 THEN 'Massive Enterprise'
 WHEN employees >= 100000 THEN 'Large Enterprise'
@@ -25,3 +25,16 @@ FROM fortune_companies
 GROUP BY enterprise_size
 ORDER BY employees desc;
 
+-- Establish total revenue for each industry:
+SELECT industry, SUM(revenue) AS total_industry_revenue
+FROM fortune_companies
+GROUP BY industry;
+
+-- Identify the most profitable industries while comparing to total number of employees:
+SELECT industry,
+ROUND(SUM(revenue), 1) AS total_industry_revenue,
+SUM(employees) AS total_industry_employees
+FROM fortune_companies
+GROUP BY industry
+HAVING total_industry_revenue >= 1500
+ORDER BY total_industry_revenue desc;
