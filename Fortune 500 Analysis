@@ -91,7 +91,7 @@ GROUP BY enterprise_size
 ORDER BY employees desc;
 
 -- 4. Establish total revenue for each industry:
-SELECT industry, SUM(revenue) AS total_industry_revenue
+SELECT industry, ROUND(SUM(revenue), 2) AS total_industry_revenue
 FROM fortune_companies
 GROUP BY industry;
 
