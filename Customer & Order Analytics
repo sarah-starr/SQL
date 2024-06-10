@@ -1,7 +1,7 @@
+#In this SQL, I'm querying a database with multiple tables in it to quantify statistics about customer and order data.
 
 
-
--- NOTE: Include for all queries with orderID: WHERE length(orderID) = 6 AND orderID <> 'Order ID'
+-- NOTE: Include as data cleaning in all queries with orderID: WHERE length(orderID) = 6 AND orderID <> 'Order ID'
 
 SELECT * FROM BIT_DB.customers LIMIT 10;
 
