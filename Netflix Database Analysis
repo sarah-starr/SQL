@@ -60,13 +60,12 @@ VALUES
     ;
 
 
-
-
+# For this project, I used SQL to query the Netflix database to get information about movies and the people who made them.
 
 
 -- 1/2. Table samples:
-SELECT * FROM "netflix_titles_info" LIMIT 3;
-SELECT * FROM "netflix_people" LIMIT 3;
+SELECT * FROM netflix_titles_info LIMIT 3;
+SELECT * FROM netflix_people LIMIT 3;
 
 -- 3. Sample join from both tables:
 SELECT
@@ -88,7 +87,7 @@ WHERE type = 'Movie';
 SELECT MAX(DATE(date_added))
 FROM netflix_titles_info;
 
--- 6. List all the moves and tv shows in alphabetical order.
+-- 6. List all the movies and tv shows in alphabetical order.
 SELECT title
 FROM netflix_titles_info
 ORDER BY title asc;
