@@ -1,0 +1,88 @@
+# For this project, I downloaded Spotify data from Kaggle.
+# Then I created a table to insert Spotify data into.
+# Finally, I performed analytics on the data using SQL. 
+
+#Creating the table: 
+
+CREATE TABLE BIT_DB.Spotifydata (
+id integer PRIMARY KEY,
+artist_name varchar NOT NULL,
+track_name varchar NOT NULL,
+track_id varchar NOT NULL,
+popularity integer NOT NULL,
+danceability decimal(4,3) NOT NULL,
+energy decimal(4,3) NOT NULL,
+key integer NOT NULL,
+loudness decimal(5,3) NOT NULL,
+mode integer NOT NULL,
+speechiness decimal(5,4) NOT NULL,
+acousticness decimal(6,5) NOT NULL,
+instrumentalness text NOT NULL,
+liveness decimal(5,4) NOT NULL,
+valence decimal(4,3) NOT NULL,
+tempo decimal(6,3) NOT NULL,
+duration_ms integer NOT NULL,
+time_signature integer NOT NULL 
+)
+
+#Then I inserted the Spotify Data .csv into the table.
+
+#Next, I explored the data using the following SQL. 
+
+
+-- Table sample:
+SELECT *
+FROM Spotifydata;
+
+-- 1. What is the average danceability by artist?
+SELECT DISTINCT artist_name, AVG(danceability)
+FROM Spotifydata
+GROUP BY artist_name;
+
+-- 2. Who are the top 10 artists by popularity?
+SELECT DISTINCT artist_name, AVG(popularity)
+FROM Spotifydata
+GROUP BY artist_name
+ORDER BY AVG(popularity) desc
+LIMIT 10;
+
+-- 3. What artist released the longest song?
+SELECT artist_name, MAX(duration_ms)
+FROM Spotifydata
+ORDER BY MAX(duration_ms) desc;
+
+-- 4. What's the average danceability for the 10 most popular songs?
+SELECT AVG(danceability)
+FROM Spotifydata
+WHERE track_name IN (SELECT
+track_name
+FROM Spotifydata
+ORDER BY popularity desc
+LIMIT 10);
+
+-- 5. What is the loudness of the 10 highest energy songs?
+SELECT track_name, loudness
+FROM Spotifydata
+ORDER BY energy desc
+LIMIT 10;
+
+-- 6. Which songs are both highly acoustic and high energy?
+SELECT artist_name, track_name
+FROM Spotifydata
+WHERE acousticness >= 0.4
+AND energy >= 0.6
+
+-- 7. Categorize songs by tempo:
+SELECT track_name, tempo,
+CASE WHEN tempo >= 140 THEN 'Fast-paced Song'
+WHEN tempo >= 100 THEN 'Medium-paced Song'
+ELSE 'Slow-paced Song'
+END AS song_speed
+FROM Spotifydata
+ORDER BY tempo desc;
+
+-- 8. Which artists have more than one track in the top 50?
+SELECT DISTINCT artist_name, COUNT(track_name) AS number_of_tracks
+FROM Spotifydata
+GROUP BY artist_name
+HAVING number_of_tracks > 1;
