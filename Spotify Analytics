@@ -86,3 +86,8 @@ SELECT DISTINCT artist_name, COUNT(track_name) AS number_of_tracks
 FROM Spotifydata
 GROUP BY artist_name
 HAVING number_of_tracks > 1;
+
+-- 9. What is the popularity and speechiness of songs with features?
+SELECT artist_name, track_name, popularity, speechiness
+FROM Spotifydata
+WHERE track_name LIKE '%feat.%';
