@@ -32,62 +32,105 @@ time_signature integer NOT NULL
 
 -- Table sample:
 SELECT *
-FROM Spotifydata;
+  FROM Spotifydata;
 
 -- 1. What is the average danceability by artist?
-SELECT DISTINCT artist_name, AVG(danceability)
-FROM Spotifydata
-GROUP BY artist_name;
+SELECT DISTINCT artist_name,
+                AVG(danceability) 
+  FROM Spotifydata
+ GROUP BY artist_name;
 
 -- 2. Who are the top 10 artists by popularity?
-SELECT DISTINCT artist_name, AVG(popularity)
-FROM Spotifydata
-GROUP BY artist_name
-ORDER BY AVG(popularity) desc
-LIMIT 10;
+SELECT DISTINCT artist_name,
+                AVG(popularity) 
+  FROM Spotifydata
+ GROUP BY artist_name
+ ORDER BY AVG(popularity) DESC
+ LIMIT 10;
 
 -- 3. What artist released the longest song?
-SELECT artist_name, MAX(duration_ms)
-FROM Spotifydata
-ORDER BY MAX(duration_ms) desc;
+SELECT artist_name,
+       MAX(duration_ms) 
+  FROM Spotifydata
+ ORDER BY MAX(duration_ms) DESC;
 
 -- 4. What's the average danceability for the 10 most popular songs?
-SELECT AVG(danceability)
-FROM Spotifydata
-WHERE track_name IN (SELECT
-track_name
-FROM Spotifydata
-ORDER BY popularity desc
-LIMIT 10);
+SELECT AVG(danceability) 
+  FROM Spotifydata
+ WHERE track_name IN (
+           SELECT track_name
+             FROM Spotifydata
+            ORDER BY popularity DESC
+            LIMIT 10
+       );
 
 -- 5. What is the loudness of the 10 highest energy songs?
-SELECT track_name, loudness
-FROM Spotifydata
-ORDER BY energy desc
-LIMIT 10;
+SELECT track_name,
+       loudness
+  FROM Spotifydata
+ ORDER BY energy DESC
+ LIMIT 10;
+
 
 -- 6. Which songs are both highly acoustic and high energy?
-SELECT artist_name, track_name
-FROM Spotifydata
-WHERE acousticness >= 0.4
-AND energy >= 0.6
+SELECT artist_name,
+       track_name
+  FROM Spotifydata
+ WHERE acousticness >= 0.4 AND 
+       energy >= 0.6;
 
 -- 7. Categorize songs by tempo:
-SELECT track_name, tempo,
-CASE WHEN tempo >= 140 THEN 'Fast-paced Song'
-WHEN tempo >= 100 THEN 'Medium-paced Song'
-ELSE 'Slow-paced Song'
-END AS song_speed
-FROM Spotifydata
-ORDER BY tempo desc;
+SELECT track_name,
+       tempo,
+       CASE WHEN tempo >= 140 THEN 'Fast-paced Song'
+            WHEN tempo >= 100 THEN 'Medium-paced Song'
+            ELSE 'Slow-paced Song'
+            END AS song_speed
+  FROM Spotifydata
+ ORDER BY tempo DESC;
 
 -- 8. Which artists have more than one track in the top 50?
-SELECT DISTINCT artist_name, COUNT(track_name) AS number_of_tracks
-FROM Spotifydata
-GROUP BY artist_name
+SELECT DISTINCT artist_name,
+                COUNT(track_name) AS number_of_tracks
+  FROM Spotifydata
+ GROUP BY artist_name
 HAVING number_of_tracks > 1;
 
 -- 9. What is the popularity and speechiness of songs with features?
-SELECT artist_name, track_name, popularity, speechiness
-FROM Spotifydata
-WHERE track_name LIKE '%feat.%';
+SELECT artist_name,
+       track_name,
+       popularity,
+       speechiness
+  FROM Spotifydata
+ WHERE track_name LIKE '%feat.%';
+
+
+#The following is a query using a Common Table Expression (CTE), or a "temporary table:"
+
+-- Calculate the average popularity for the artists in the Spotify data table. Then, for every artist with an average popularity of 90 or above, show their name, their average popularity, and label them as a “Top Star”.
+
+WITH tempTable AS (
+    SELECT AVG(popularity) AS avg_popularity,
+           artist_name
+      FROM Spotifydata
+     GROUP BY artist_name
+)
+SELECT artist_name,
+       avg_popularity,
+       CASE WHEN avg_popularity >= 90 THEN 'Top Star' ELSE 'N/A' END AS star_status
+  FROM tempTable
+ WHERE star_status = 'Top Star';
+
+-- OR
+
+WITH tempTable AS (
+    SELECT AVG(popularity) AS avg_popularity,
+           artist_name
+      FROM Spotifydata
+     GROUP BY artist_name
+)
+SELECT artist_name,
+       avg_popularity,
+       'Top Star' AS star_status
+  FROM tempTable
+ WHERE avg_popularity >= 90;
