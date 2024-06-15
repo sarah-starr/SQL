@@ -1,4 +1,10 @@
--- 1. Show Customers (their full names, customer ID, and country) who are not in the US. (Hint: != or <> can be used to say "is not equal to").
+# This project uses a version of the Chinook database found here: https://www.kaggle.com/datasets/alaasedeeq/chinook/code
+
+
+# For this project, I used SQL to query the Chinook database to perform various analytics related to musicians and their music, as well as album/song sales with relevant employee metrics.
+
+
+-- 1. Show Customers (their full names, customer ID, and country) who are not in the US.
 SELECT CustomerId,
        FirstName,
        LastName,
