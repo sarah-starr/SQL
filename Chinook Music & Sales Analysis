@@ -136,3 +136,37 @@ SELECT employees.LastName,
  GROUP BY employees.LastName
  ORDER BY total_sales DESC
  LIMIT 1;
+
+-- 15. How many artists are in each genre?
+SELECT genres.Name genre,
+       COUNT(DISTINCT artists.ArtistId) total_artists
+  FROM genres
+       LEFT JOIN
+       tracks ON genres.GenreId = tracks.GenreId
+       LEFT JOIN
+       albums ON tracks.AlbumId = albums.AlbumId
+       LEFT JOIN
+       artists ON albums.ArtistId = artists.ArtistId
+ GROUP BY genres.Name;
+
+-- 16. Rank the 10 highest paying customers by total money spent. Include their country and contact information.
+SELECT DENSE_RANK() OVER (ORDER BY SUM(invoices.Total) DESC) AS Rank,
+       customers.CustomerId,
+       customers.FirstName,
+       customers.LastName,
+       SUM(invoices.Total) AS TotalSpent,
+       customers.Country,
+       customers.Phone,
+       customers.Email
+  FROM customers
+       JOIN
+       invoices ON customers.CustomerId = invoices.CustomerId
+ GROUP BY customers.CustomerId,
+          customers.FirstName,
+          customers.LastName,
+          customers.Country,
+          customers.Phone,
+          customers.Email
+ ORDER BY TotalSpent DESC
+ LIMIT 10;
+
