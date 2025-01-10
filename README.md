@@ -1,6 +1,6 @@
 ## Sarah Starr's SQL Portfolio
 
-### Welcome to my SQL portfolio! This code repository contains examples of SQL I've written and will grow as I continue learning and creating new projects. Feel free to take a look and reach out if you have any questions.
+### Welcome to my SQL portfolio! This code repository contains examples of queries I've written as a demonstration of my basic competencies. Feel free to take a look and reach out if you have any questions.
 
 Find my Tableau portfolio [here](https://public.tableau.com/app/profile/sarah.starr2453/vizzes) for some examples of visualizations/dashboards that I've created.
 
